@@ -33,6 +33,13 @@ img.activator {
   transition: 0.3s;
 }
 
+button.btn.submit {
+  background: #26a69a;
+  padding: 1px 1px;
+  padding-bottom: 10px;
+  width: 117px;
+}
+
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #ddd;
