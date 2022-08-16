@@ -19,8 +19,11 @@ function openTab(evt, id) {
 }
 
 button.addEventListener("click" || "keypress", function (event) {
+  
   event.preventDefault();
+  $(".title").empty().append("<h2>Search results for : "+input.value+"</h2>");
   search(event);
+ 
 });
 
 function search(event) {
@@ -92,6 +95,7 @@ function search(event) {
           
           ingredientsHtml += "</ul>";
         }
+       
 
         $( ".listitem" ).on( "click", function( event ) {
           event.preventDefault();
@@ -217,11 +221,12 @@ console.log(filteredNames);
           "'>" +
           instructionsHtml +
           "</div>";
-
+          
         $(".title").append(html);
       
       }
     });
   input.value = "";
+ 
 }
 
