@@ -149,7 +149,7 @@ console.log(filteredNames);
           data.results[i].nutrition.sugar +
           "</li>";
 
-        html += "<div class='tab'>";
+        html += "<div class='tab' id='"+ did + "'>";
         html +=
           "<div class='header'><div><h2>" +
           data.results[i].name +
