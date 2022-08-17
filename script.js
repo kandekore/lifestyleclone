@@ -1,30 +1,30 @@
 var button = document.querySelector(".submit");
 var input = document.querySelector(".input_text");
 var listings = document.querySelector(".list-group");
-var names = [" "]
-var preExistingData = localStorage.getItem('shopping-list')
-var recipe = [" "]
-var recipeID = [" "]
-names.push(preExistingData)
-console.log(preExistingData)
+var names = [" "];
+var preExistingData = localStorage.getItem("shopping-list");
+var recipe = [" "];
+var recipeID = [" "];
+names.push(preExistingData);
+console.log(preExistingData);
 
-if (preExistingData === null){
-  var names = [" "]
+if (preExistingData === null) {
+  var names = [" "];
 }
 
-console.log(recipeID)
-console.log(names)
+console.log(recipeID);
+console.log(names);
 function openTab(evt, id) {
   alert(id);
   alert(evt);
 }
 
 button.addEventListener("click" || "keypress", function (event) {
-  
   event.preventDefault();
-  $(".title").empty().append("<h2>Search results for : "+input.value+"</h2>");
+  $(".title")
+    .empty()
+    .append("<h2>Search results for : " + input.value + "</h2>");
   search(event);
- 
 });
 
 function search(event) {
@@ -47,7 +47,6 @@ function search(event) {
 
       for (let i = 0; i < data.results.length; i++) {
         var html = "";
-        
 
         console.log(data.results[i]);
 
@@ -64,8 +63,6 @@ function search(event) {
           "<li><li>Carbohydrates: " +
           data.results[i].nutrition.carbohydrates +
           "<li>";
-
-       
 
         if (data.results[i].instructions.length > 0) {
           instructionsHtml += "<ul>";
@@ -90,68 +87,74 @@ function search(event) {
               "<li a href='#' class='listitem'>" +
               data.results[i].sections["0"].components[l].raw_text +
               "</li>";
-              console.log( "#tabcon-"+did+" a" );
-            
+            console.log("#tabcon-" + did + " a");
           }
-          
+
           ingredientsHtml += "</ul>";
         }
-       
+
         //create a new array
-        $( ".listitem" ).on( "click", function( event ) {
+        $(".listitem").on("click", function (event) {
           event.preventDefault();
-          // var items = new Array();
-          // localStorage.items("items" ,$( this ).text().replace(/\d+/g, '').replace(/tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|/g,""))
-          // setItem(keyName, keyValue)
-          // let list = JSON.parse(localStorage.getItem("shopping-list", "[]"))
-          
-          names.push("<li id='item'>" + $( this ).html().replace(/\d+/g, '').replace(/tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|/g,"") +"</li>" );
-         
-let filteredNames = [...new Set(names)];
+          $(this).attr("id", "done");
 
-console.log(filteredNames);
+          names.push(
+            "<li id='item'>" +
+              $(this)
+                .html()
+                .replace(/\d+/g, "")
+                .replace(
+                  /tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|-ounce|-ounces|plus more|-whole|cans|can/g,
+                  ""
+                ) +
+              "</li>"
+          );
 
-          localStorage.setItem("shopping-list",  JSON.stringify(filteredNames));
-          
+          let filteredNames = [...new Set(names)];
 
+          console.log(filteredNames);
 
-          // console.log( $( this ).html().replace(/\d+/g, '').replace(/tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|/g,"") );
-          // console.log(names)
+          localStorage.setItem("shopping-list", JSON.stringify(filteredNames));
         });
-      
-        
-      $( ".tab"  ).on( "click", "#savebutton" ,function( event ) {
-        // for (i = 0; i<recipeID.length; i++){
-        event.preventDefault();
-    // console.log(event.currentTarget.value)
-       
-        recipe = event.currentTarget.value +" - "+ did;
-        recipeID.push(recipe) 
-        // console.log(datArray)
-        //  let filteredRecipe = [...new Set(recipe)];  
-         
-        let filteredMealID = [...new Set(recipeID)];
-        localStorage.setItem("meal-list",  JSON.stringify(filteredMealID));
-// push all the data in the array
-        //push all the filtered meal
-        // localStorage.setItem("meal-list",  JSON.stringify(datArray[i]));
-      // }
-        // recipeID.push("<li>" + did +"</li>")
-        
-        // localStorage.setItem("meal-id",  JSON.stringify(filteredMealID));
-        // recipeID.push(datArray)
-       
-        
-      //  console.log(filteredRecipe)
-      //  console.log(filteredMealID)
-        console.log(filteredMealID)})
+
+        $(".tab").on("click", "#savebutton", function (event) {
+          // for (i = 0; i<recipeID.length; i++){
+          event.preventDefault();
+
+          // console.log(event.currentTarget.value)
+
+          recipe = event.currentTarget.value;
+          unqref = event.currentTarget.className;
+          console.log(unqref);
+          console.log(event.currentTarget);
+          recipeID.push(
+            "<li id='" + unqref + "' class='item'>" + recipe + "</li>"
+          );
+          // console.log(datArray)
+          //  let filteredRecipe = [...new Set(recipe)];
+
+          let filteredMealID = [...new Set(recipeID)];
+          localStorage.setItem("meal-list", JSON.stringify(filteredMealID));
+          // push all the data in the array
+          //push all the filtered meal
+          // localStorage.setItem("meal-list",  JSON.stringify(datArray[i]));
+          // }
+          // recipeID.push("<li>" + did +"</li>")
+
+          // localStorage.setItem("meal-id",  JSON.stringify(filteredMealID));
+          // recipeID.push(datArray)
+
+          //  console.log(filteredRecipe)
+          //  console.log(filteredMealID)
+          console.log(filteredMealID);
+        });
         // let ratingDec = data.results[i].user_ratings;
         // ratingDec = ratingDec * 100;
         var rating = Math.round(data.results[i].user_ratings.score * 10);
         var votes =
           data.results[i].user_ratings.count_positive +
           data.results[i].user_ratings.count_negative;
-         
+
         // console.log(votes);
 
         var nutritionHTML =
@@ -169,7 +172,7 @@ console.log(filteredNames);
           data.results[i].nutrition.sugar +
           "</li>";
 
-        html += "<div class='tab' id='"+ did + "'>";
+        html += "<div class='tab' id='" + did + "'>";
         html +=
           "<div class='header'><div><h2>" +
           data.results[i].name +
@@ -183,7 +186,11 @@ console.log(filteredNames);
           rating +
           "/10 (" +
           votes +
-          " votes)</p></div><button class='btn submit' id='savebutton' value='"+ data.results[i].name +"' style='float: right;' >Save Recipe</button>";
+          " votes)</p></div><button class='" +
+          did +
+          "' id='savebutton' value='" +
+          data.results[i].name +
+          "' style='float: right;' >Save Recipe</button>";
         html +=
           "<button class='tablinks tabbtn-" +
           did +
@@ -241,12 +248,9 @@ console.log(filteredNames);
           "'>" +
           instructionsHtml +
           "</div>";
-          
+
         $(".title").append(html);
-      
       }
     });
   input.value = "";
- 
 }
-
