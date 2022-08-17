@@ -3,7 +3,8 @@ var input = document.querySelector(".input_text");
 var listings = document.querySelector(".list-group");
 var names = [" "]
 var preExistingData = localStorage.getItem('shopping-list')
-var recipe = ["'<li>" +"</li>'"]
+var recipe = [" "]
+var recipeID = [" "]
 names.push(preExistingData)
 console.log(preExistingData)
 
@@ -11,7 +12,7 @@ if (preExistingData === null){
   var names = [" "]
 }
 
-
+console.log(recipeID)
 console.log(names)
 function openTab(evt, id) {
   alert(id);
@@ -96,7 +97,7 @@ function search(event) {
           ingredientsHtml += "</ul>";
         }
        
-
+        //create a new array
         $( ".listitem" ).on( "click", function( event ) {
           event.preventDefault();
           // var items = new Array();
@@ -104,7 +105,7 @@ function search(event) {
           // setItem(keyName, keyValue)
           // let list = JSON.parse(localStorage.getItem("shopping-list", "[]"))
           
-          names.push("</div><li id='item'>" + $( this ).html().replace(/\d+/g, '').replace(/tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|/g,"") +"</li></div>" );
+          names.push("<li id='item'>" + $( this ).html().replace(/\d+/g, '').replace(/tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|/g,"") +"</li>" );
          
 let filteredNames = [...new Set(names)];
 
@@ -119,12 +120,31 @@ console.log(filteredNames);
         });
       
         
-      $( "#savebutton" ).on( "click", function( event ) {
+      $( ".tab"  ).on( "click", "#savebutton" ,function( event ) {
+        // for (i = 0; i<recipeID.length; i++){
         event.preventDefault();
-        recipe.push("<li>" + $( this).text()+ mealName +"</li>")
-        localStorage.setItem("meal-list",  JSON.stringify(recipe));
+    // console.log(event.currentTarget.value)
        
-        console.log(recipe)})
+        recipe = event.currentTarget.value +" - "+ did;
+        recipeID.push(recipe) 
+        // console.log(datArray)
+        //  let filteredRecipe = [...new Set(recipe)];  
+         
+        let filteredMealID = [...new Set(recipeID)];
+        localStorage.setItem("meal-list",  JSON.stringify(filteredMealID));
+// push all the data in the array
+        //push all the filtered meal
+        // localStorage.setItem("meal-list",  JSON.stringify(datArray[i]));
+      // }
+        // recipeID.push("<li>" + did +"</li>")
+        
+        // localStorage.setItem("meal-id",  JSON.stringify(filteredMealID));
+        // recipeID.push(datArray)
+       
+        
+      //  console.log(filteredRecipe)
+      //  console.log(filteredMealID)
+        console.log(filteredMealID)})
         // let ratingDec = data.results[i].user_ratings;
         // ratingDec = ratingDec * 100;
         var rating = Math.round(data.results[i].user_ratings.score * 10);
@@ -132,7 +152,7 @@ console.log(filteredNames);
           data.results[i].user_ratings.count_positive +
           data.results[i].user_ratings.count_negative;
          
-        console.log(votes);
+        // console.log(votes);
 
         var nutritionHTML =
           "<li>Calories: " +
@@ -163,7 +183,7 @@ console.log(filteredNames);
           rating +
           "/10 (" +
           votes +
-          " votes)</p></div><button class='btn submit' id='savebutton' value='"+did+"' style='float: right;' >Save Recipe</button>";
+          " votes)</p></div><button class='btn submit' id='savebutton' value='"+ data.results[i].name +"' style='float: right;' >Save Recipe</button>";
         html +=
           "<button class='tablinks tabbtn-" +
           did +
@@ -210,9 +230,9 @@ console.log(filteredNames);
           did +
           " ingredients" +
           did +
-          "'><ul class='inglist'>" +
+          "'><h4>Click on an ingredient to add it to your shopping list</h4><ul class='inglist'>" +
           ingredientsHtml +
-          "</ul><a href='#'><button class='btn btn-primary' id='addtolist'>Save</button></a></div>";
+          "</ul><a href='#'></a></div>";
         html +=
           "<div class='tabcontent tabcon-" +
           did +
