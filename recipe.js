@@ -1,14 +1,19 @@
-let recipelist = localStorage
-  .getItem("meal-list")
+let recipelist = JSON.parse(localStorage
+  .getItem("meal-list"))
+
+  recipelist.shift()
   //   .replace(/\d+/g, "")
-  .replace(/-/g, "")
-  .replace(/","/g, "")
-  .replace(/[\[\]']+/g, "")
-  .replace(/["]/g, "")
-  .replace(/\\ /g, "");
+  // .replace(/-/g, "")
+  // .replace(/","/g, "")
+  // .replace(/['[']/g, "<li>")
+  // .replace(/]/g, "</li>")
+  // .replace(/["]/g, "")
+  // .replace(/\\ /g, "");
+
+  console.log(recipelist)
 //shoppinglist.replaceAll('[\\]', '');
 // shoppinglist.replace(/[\[\]']+/g,'')
-recipelist.replaceAll("[\\]", "");
+// recipelist.replaceAll("[\\]", "");
 // shoppinglist.replace(/[\[\]']+/g,'')
 // shoppinglist.replace(/[\[\]']+/g,'')
 
@@ -24,21 +29,65 @@ recipelist.replaceAll("[\\]", "");
 //   .replace(/[/]/g, "")
 //   .replace(/\\ /g, "");
 
+recipelist.forEach((element) => {
+   var listitem = $("<li>");
+  listitem.addClass("item");
+  listitem.text(element);
+  var container = $("<div>");
+  container.addClass("container")
+  var button = $("<button>");
+  button.text("delete");
+  
+  
+  // var button = document.querySelector("#delete");
+button.on("click", function remove() {
+  var liItem = $(this).siblings("li").text();
+  const recipelist = JSON.parse(localStorage.getItem("meal-list"));
+  const filtered = recipelist.filter(item => item !== liItem);
+  localStorage.setItem("meal-list", JSON.stringify(filtered));
+  location.reload()
+ });
+ container.append(button);
+  container.append(listitem);
+  
+  $("#display").append(container);
+ 
+  })
+
 function openTab(evt, id) {
   alert(id);
   alert(evt);
 }
-var preExistingData = localStorage.getItem("shopping-list");
+var preExistingData = localStorage.getItem("meal-list")
+// .replace(/[[]/g, "<div><li>").replace(/[]]/g, "").replace(/","/g, "</li><button id='delete'>Delete</button></div><div class='container'><li>").replace(/"/g, "").replace(/[\[\]']+/g, "");
+
+
+
+
+
 
 var names = [" "];
 names.push(preExistingData);
 if (preExistingData === null) {
-  var names = [" "];
+  var names = [""];
 }
+
 console.log(names);
 console.log(recipelist);
+console.log(preExistingData)
+
+// preExistingData.forEach((element) => {
+//   var listitem = $("<li>");
+//   listitem.addClass("item");
+//   listitem.text(element);
+//   var container = $("<div>");
+//   container.addClass("container")
+//   var button = $("<button>");
+//   button.text("delete");})
+
+
 // console.log(recipeid);
-$("#display").append(recipelist).html();
+// $("#display").append(container);
 var idGen = $(".item").attr("id");
 // console.log(idGen);
 
@@ -48,7 +97,7 @@ $(".item").on("click", function (event) {
   fetch("https://tasty.p.rapidapi.com/recipes/get-more-info?id=" + query, {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "d1b6b0fd0emsh148b53da77ee623p1c1b9ajsn30bddddf5591",
+      "X-RapidAPI-Key": "23fecd81a3mshb52812b90f54ff6p137a2ajsna2c88b9cae07",
       "X-RapidAPI-Host": "tasty.p.rapidapi.com",
     },
   })
@@ -201,6 +250,15 @@ $(".item").on("click", function (event) {
       $(".title").append(html);
     });
 });
+
+// var button = document.querySelector("#delete");
+// button.addEventListener("click", function remove() {
+//   var liItem = $(this).siblings("li").text();
+//   const recipelist = JSON.parse(localStorage.getItem("meal-list"));
+//   const filtered = recipelist.filter(item => item !== liItem);
+//   localStorage.setItem("meal-list", JSON.stringify(filtered));
+//   location.reload()
+//  })
 
 //   .then((response) => response.json())
 //     .then((data) => {

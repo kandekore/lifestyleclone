@@ -1,7 +1,7 @@
 var button = document.querySelector(".submit");
 var input = document.querySelector(".input_text");
 var listings = document.querySelector(".list-group");
-var names = [" "];
+var names = [""];
 var preExistingData = localStorage.getItem("shopping-list");
 var recipe = [" "];
 var recipeID = [" "];
@@ -36,7 +36,7 @@ function search(event) {
     {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "d1b6b0fd0emsh148b53da77ee623p1c1b9ajsn30bddddf5591",
+        "X-RapidAPI-Key": "23fecd81a3mshb52812b90f54ff6p137a2ajsna2c88b9cae07",
         "X-RapidAPI-Host": "tasty.p.rapidapi.com",
       },
     }
@@ -99,17 +99,19 @@ function search(event) {
           $(this).attr("id", "done");
 
           names.push(
-            "<li id='item'>" +
+            // "<li id='item'>" +
               $(this)
                 .html()
                 .replace(/\d+/g, "")
                 .replace(
                   /tablespoons|tablespoon|cups|pints|teaspoons|to taste|slices|of|ounces|sliced|teaspoon|cup|sharp|¼|¾|½|⅓|room temperature|-ounce|-ounces|plus more|-whole|cans|can/g,
                   ""
-                ) +
-              "</li>"
+                  
+                ).trim()
+               
+                // +"</li>"
           );
-
+          // names.push($(this).html())
           let filteredNames = [...new Set(names)];
 
           console.log(filteredNames);
@@ -128,7 +130,7 @@ function search(event) {
           console.log(unqref);
           console.log(event.currentTarget);
           recipeID.push(
-            "<li id='" + unqref + "' class='item'>" + recipe + "</li>"
+            recipe
           );
           // console.log(datArray)
           //  let filteredRecipe = [...new Set(recipe)];
